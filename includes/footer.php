@@ -3,7 +3,7 @@
                 <div class="row">
                     <!-- Logo -->
                     <div class="col-lg-6 col-md-12 mb-4 mb-md-0">
-                        <img src="/RetroArc-Website-PHP/images/logo-placeholder.png" alt="Logo" style="width: 150px;">
+                        <img src="assets/images/logo-placeholder.png" alt="Logo" style="width: 150px;">
                     </div>
 
                     <!-- Footer Text -->

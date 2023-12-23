@@ -1,0 +1,457 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body {
+   
+    background-image: url(../images/background.jpg);
+    background-size: cover;
+    height: 100%;
+
+}
+
+.main-container {
+    width: 100%;
+    /* By default, it takes the full width */
+    max-width: 1500px;
+    /* Adjust this value to set the maximum width you desire */
+    background-color: #fff;
+    box-sizing: border-box;
+    position: relative;
+    min-height: 100vh;
+}
+
+/* Example media query for screens wider than 600px */
+@media (min-width: 1250px) {
+    .main-container {
+        width: 80%;
+        /* Adjust the width as needed */
+        /* Other styles if necessary */
+        margin: auto;
+    }
+}
+
+/* Additional media query for smaller screens */
+@media (max-width: 1999px) {
+    .main-container {
+        width: 100%;
+        /* Full width for smaller screens */
+        /* Other styles if necessary */
+    }
+}
+
+
+
+/* For Webkit (Chrome, Safari, etc.) */
+::-webkit-scrollbar {
+    width: 10px;
+    /* Adjust the width of the scrollbar */
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    /* The track of the scrollbar */
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+    /* The scroll handle */
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+    /* Handle on hover */
+}
+
+
+
+/*Navbar*/
+
+nav.navbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 10;
+
+}
+
+.gradient-container {
+    background: linear-gradient(to top, #5f7cff, #fe957b);
+    height: 200px;
+}
+
+.navbar-nav {
+    flex-direction: row;
+}
+
+hr {
+    width: 100%;
+    border-top: 1px solid #ccc;
+}
+
+.navbar .container .navbar-nav {
+    justify-content: flex-end;
+}
+
+.relative-container {
+    position: relative;
+}
+
+hr {
+    border-top-color: white;
+}
+
+.nav-link {
+    color: black;
+    background-color: rgb(207, 154, 10);
+    margin: 2px;
+    border-radius: 5px;
+}
+
+.nav-link:hover {
+    color: whitesmoke;
+}
+
+.dropdown-item {
+    color: black;
+}
+
+.dropdown-item:hover {
+    color: gray;
+}
+
+
+svg {
+    fill: whitesmoke;
+}
+
+svg:hover {
+    fill: gray;
+}
+
+
+
+/*Carousel*/
+.bannerImages {
+    opacity: 95%;
+}
+
+
+
+h2 {
+    text-align: center;
+    padding-top: 5%;
+}
+
+.content-wrap {
+    position: relative;
+    /* Needed for footer positioning */
+    padding-bottom: 60px;
+    /* Space for the footer */
+}
+
+.sega-content-wrap {
+    min-height: calc(100vh - 60px);
+    /* Adjust 60px to the height of your footer */
+    /* If you have a header, you should subtract its height as well */
+    position: relative;
+    /* Needed for footer positioning */
+    padding-bottom: 60px;
+    /* Space for the footer */
+}
+
+/*Cards*/
+.card-img-custom {
+    width: 100%;
+    /* Makes the image fill the card width */
+    height: 200px;
+    /* Adjust the height as needed */
+    object-fit: contain;
+    /* Ensures the image covers the area without stretching */
+}
+
+.card {
+    position: relative;
+    /* Needed for absolute positioning of the button */
+    height: 100%;
+    /* This will make sure all cards are the same height */
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-text {
+
+    flex-grow: 1;
+    /* Ensures that the text section expands */
+}
+
+.card-price {
+    font-weight: bold;
+    /* Example style, adjust as needed */
+    padding-bottom: 20%;
+}
+
+.card .btn {
+    margin-top: auto;
+    /* Pushes the button to the bottom of the flex container */
+    position: absolute;
+    /* Absolute positioning */
+    bottom: 20px;
+    /* Adjust as needed for spacing from the bottom */
+    left: 20px;
+    /* Adjust as needed for spacing from the left */
+    right: 20px;
+    /* Adjust as needed for spacing from the right */
+}
+
+footer {
+    background-color: rgb(240, 196, 76);
+    width: 100%;
+    position: relative;
+    /* Relative to the content-wrap */
+    bottom: 0;
+    clear: both;
+    /* This will ensure it doesn't overlap with floated elements */
+}
+
+
+.product-container {
+    width: 80%;
+    margin: 20px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product-image {
+    float: left;
+    width: 50%;
+    padding-right: 20px;
+}
+
+.product-image img {
+    width: 100%;
+    height: auto;
+}
+
+.product-details {
+    float: left;
+    width: 50%;
+}
+
+h1 {
+    margin-top: 0;
+}
+
+.product-actions {
+    text-align: left;
+    /* Aligns the action items to the left */
+}
+
+.quantity {
+    margin-bottom: 10px;
+    /* Adds some space below the quantity selector */
+}
+
+.quantity label {
+    margin-right: 5px;
+}
+
+.quantity input {
+    width: 60px;
+    /* Width of the quantity input */
+}
+
+.product-actions button {
+    margin: 10px 10px 10px 0;
+    /* Top, Right, Bottom, Left */
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.product-description {
+    clear: both;
+    padding-top: 20px;
+}
+
+
+
+/*Login Page*/
+
+.main-title {
+    margin-top: 50px;
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 20px;
+}
+
+.form-field {
+    margin-bottom: 15px;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+.form-field input {
+    width: 500px;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+.form-main {
+    margin-top: 20px;
+}
+
+.form-actions {
+    margin-top: 50px;
+}
+
+.create-account-link,
+.reset-password-link {
+    color: #0066cc;
+    text-decoration: none;
+}
+
+.create-account-link:hover,
+.reset-password-link:hover {
+    text-decoration: underline;
+}
+
+.login-content-wrap {
+    min-height: calc(81vh - 60px);
+    /* Adjust 60px to the height of your footer */
+    /* If you have a header, you should subtract its height as well */
+    position: relative;
+    /* Needed for footer positioning */
+    padding-bottom: 60px;
+    /* Space for the footer */
+}
+
+
+
+/*Cart Page*/
+
+.cart-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    margin: 20px auto;
+    width: 80%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cart-item h2 {
+    color: #333;
+}
+
+.cart-item p {
+    font-size: 16px;
+    color: #666;
+}
+
+input[type="number"] {
+    width: 60px;
+    padding: 5px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.cart-content-wrap {
+    min-height: calc(81vh - 60px);
+    /* Adjust 60px to the height of your footer */
+    /* If you have a header, you should subtract its height as well */
+    position: relative;
+    /* Needed for footer positioning */
+    padding-bottom: 60px;
+    /* Space for the footer */
+}
+
+
+/*Review Section*/
+
+h1,
+h2 {
+    color: #333;
+}
+
+
+.card {
+    margin-bottom: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Adds a shadow for depth */
+    border: none; /* Optional: removes the border */
+}
+
+.card-header {
+    background-color: #333;
+    color: #fff;
+    font-weight: bold;
+    padding: 0.75rem 1.25rem; /* Adjusts padding for header */
+}
+
+.card-title {
+    font-size: 1.25rem;
+    color: #007bff; /* Makes title color consistent */
+}
+
+.card-subtitle {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.card-text {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    color: #333; /* Darker text for better readability */
+}
+
+/* Form adjustments for consistency and spacing */
+.form-control, .form-select {
+    border-radius: 0.25rem;
+    border: 1px solid #ced4da;
+    padding: 0.375rem 0.75rem; /* Adjusts padding for input and select */
+}
+
+.btn-primary {
+    background-color: #007bff;
+    border-color: #007bff;
+    padding: 0.5rem 1rem; /* Adjusts padding for button */
+    margin-top: 5rem;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+/* This will ensure spacing between form fields */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+/* Makes button a block element and full width */
+form button[type="submit"] {
+    display: block;
+    width: 100%;
+}
+
+.card-body form .mb-3 + button {
+    display: block; /* Ensures the button is a block element */
+    width: 100%; /* Full width of the container */
+    margin-top: 1rem; /* Adds space above the button */
+}

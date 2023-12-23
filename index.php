@@ -3,13 +3,13 @@
 <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
             <div class="carousel-inner">
                 <div class="carousel-item active">
-                    <img src="/RetroArc-Website-PHP/images/banner1.jpg" class="d-block w-100" alt="...">
+                    <img src="assets/images/banner1.jpg" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="/RetroArc-Website-PHP/images/banner2.jpeg" class="d-block w-100" alt="...">
+                    <img src="assets/images/banner2.jpeg" class="d-block w-100" alt="...">
                 </div>
                 <div class="carousel-item">
-                    <img src="/RetroArc-Website-PHP/images/banner4.jpg" class="d-block w-100" alt="...">
+                    <img src="assets/images/banner4.jpg" class="d-block w-100" alt="...">
                 </div>
             </div>
             <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying"

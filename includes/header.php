@@ -1,13 +1,24 @@
+<?php
+    header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
+    header('Pragma: no-cache'); // HTTP 1.0.
+    header('Expires: 0'); // Proxies.
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RetroArc</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="/RetroArc/css/style.css">
+    <link rel="stylesheet" href="../assets/css/style.css?">
+
 </head>
 
 <body>
@@ -55,8 +66,8 @@
                 <!-- Bottom Part -->
                 <div class="container">
                     <div class="navbar-brand">
-                        <a href="/RetroArc-Website-PHP/pages/index.html">
-                            <img src="/RetroArc-Website-PHP/images/logo-placeholder.png" alt="Logo"
+                        <a href="../index.php">
+                            <img src="assets/images/logo-placeholder.png" alt="Logo"
                                 style="height: 40px;">
                         </a>
                     </div>
@@ -67,13 +78,9 @@
                                 CONSOLES
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item"
-                                        href="/RetroArc-Website-PHP/pages/consoles/conNintendo.html">NINTENDO</a></li>
-                                <li><a class="dropdown-item"
-                                        href="/RetroArc-Website-PHP/pages/consoles/conPlaystation.html">PLAYSTATION</a>
-                                </li>
-                                <li><a class="dropdown-item"
-                                        href="/RetroArc-Website-PHP/pages/consoles/conSega.html">SEGA</a></li>
+                                <li><a class="dropdown-item" href="../products.php?type=consoles&brand=nintendo">NINTENDO</a></li>
+                                <li><a class="dropdown-item" href="../products.php?type=consoles&brand=playstation">PLAYSTATION</a></li>
+                                <li><a class="dropdown-item" href="../products.php?type=consoles&brand=sega">SEGA</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -82,13 +89,9 @@
                                 GAMES
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item"
-                                        href="/RetroArc-Website-PHP/pages/games/gameNintendo.html">NINTENDO</a></li>
-                                <li><a class="dropdown-item"
-                                        href="/RetroArc-Website-PHP/pages/games/gamePlaystation.html">PLAYSTATION</a>
-                                </li>
-                                <li><a class="dropdown-item"
-                                        href="/RetroArc-Website-PHP/pages/games/gameSega.html">SEGA</a></li>
+                                <li><a class="dropdown-item" href="../products.php?type=games&brand=nintendo">NINTENDO</a></li>
+                                <li><a class="dropdown-item" href="../products.php?type=games&brand=playstation">PLAYSTATION</a></li>
+                                <li><a class="dropdown-item" href="../products.php?type=games&brand=sega">SEGA</a></li>
                             </ul>
                         </li>
                         <li class="nav-item dropdown">
@@ -97,17 +100,15 @@
                                 ACCESSORIES
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item"
-                                        href="/RetroArc-Website-PHP/pages/accessories/accNintendo.html">NINTENDO</a>
-                                </li>
-                                <li><a class="dropdown-item"
-                                        href="/RetroArc-Website-PHP/pages/accessories/accPlaystation.html">PLAYSTATION</a>
-                                </li>
-                                <li><a class="dropdown-item"
-                                        href="/RetroArc-Website-PHP/pages/accessories/accSega.html">SEGA</a></li>
+                                <li><a class="dropdown-item" href="../products.php?type=accessories&brand=nintendo">NINTENDO</a></li>
+                                <li><a class="dropdown-item" href="../products.php?type=accessories&brand=playstation">PLAYSTATION</a></li>
+                                <li><a class="dropdown-item" href="../products.php?type=accessories&brand=sega">SEGA</a></li>
                             </ul>
                         </li>
                     </div>
                 </div>
             </nav>
+            <?php if (basename($_SERVER['SCRIPT_NAME']) != 'index.php'): ?>
+                <div class="gradient-container"></div>
+            <?php endif; ?>
         </div>
