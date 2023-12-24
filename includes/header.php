@@ -48,7 +48,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a href="/RetroArc-Website-PHP/pages/login.html">
+                            <a href="../account.php">
                                 <svg xmlns="http://www.w3.org/2000/svg"
                                     width="32" height="32" fill="currentColor" class="bi bi-box-arrow-in-right"
                                     viewBox="0 0 16 16">
@@ -112,3 +112,4 @@
                 <div class="gradient-container"></div>
             <?php endif; ?>
         </div>
+    

@@ -1,25 +1,38 @@
-*{
+* {
     margin: 0;
     padding: 0;
+    box-sizing: border-box; /* Ensures padding does not affect the total width or height */
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
 }
 
 body {
-   
     background-image: url(../images/background.jpg);
     background-size: cover;
-    height: 100%;
-
 }
 
 .main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* This will push the footer down */
+    min-height: 100vh; /* Full viewport height */
     width: 100%;
-    /* By default, it takes the full width */
     max-width: 1500px;
-    /* Adjust this value to set the maximum width you desire */
     background-color: #fff;
-    box-sizing: border-box;
     position: relative;
-    min-height: 100vh;
+    margin: auto;
+}
+
+footer {
+    background-color: rgb(240, 196, 76);
+    width: 100%;
+    position: relative;
+    bottom: 0;
+    clear: both;
+    /* You can remove 'position: absolute;' if you add 'flex' to '.main-container' */
 }
 
 /* Example media query for screens wider than 600px */
@@ -151,6 +164,7 @@ h2 {
 }
 
 .content-wrap {
+    flex-grow: 1;
     position: relative;
     /* Needed for footer positioning */
     padding-bottom: 60px;
@@ -214,15 +228,7 @@ h2 {
     /* Adjust as needed for spacing from the right */
 }
 
-footer {
-    background-color: rgb(240, 196, 76);
-    width: 100%;
-    position: relative;
-    /* Relative to the content-wrap */
-    bottom: 0;
-    clear: both;
-    /* This will ensure it doesn't overlap with floated elements */
-}
+
 
 
 .product-container {
@@ -307,7 +313,8 @@ h1 {
 }
 
 .form-field input {
-    width: 500px;
+    width: 100%;
+    max-width: 500px;
     padding: 8px;
     box-sizing: border-box;
 }
@@ -331,16 +338,14 @@ h1 {
     text-decoration: underline;
 }
 
-.login-content-wrap {
-    min-height: calc(81vh - 60px);
-    /* Adjust 60px to the height of your footer */
-    /* If you have a header, you should subtract its height as well */
+.login-content-wrap, .create-account-content-wrap, .account-container {
+    width: 100%; /* Adjust width as needed */
+    max-width: 500px; /* Adjust maximum width as needed */
+    margin: auto; /* This will help in centering as well */
     position: relative;
-    /* Needed for footer positioning */
     padding-bottom: 60px;
-    /* Space for the footer */
+    min-height: calc(81vh - 60px);
 }
-
 
 
 /*Cart Page*/
