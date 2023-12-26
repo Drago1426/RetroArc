@@ -34,10 +34,14 @@
 
                 <div class="row">
                     <div class="col">
-                        <button type="submit" name="action" value="addToCart" class="btn btn-primary w-100">Add to Cart</button>
-                    </div>
-                    <div class="col">
-                        <button type="submit" name="action" value="addToWishlist" class="btn btn-secondary w-100">Wishlist</button>
+                        <form action="add_to_cart.php" method="post">
+                            <input type="hidden" name="productId" value="<?php echo $product['id']; ?>">
+                            <button type="button" class="btn btn-primary" onclick="addToCart(<?php echo $productId; ?>)">Add to Cart</button>
+                        </form>
+                        <form action="add_to_wishlist.php" method="post">
+                            <input type="hidden" name="productId" value="<?php echo $product['id']; ?>">
+                            <button class="btn btn-secondary" type="button" onclick="addToWishlist(<?php echo $productId; ?>)">Add to Wishlist</button>
+                        </form>
                     </div>
                 </div>
             </form>
@@ -69,3 +73,7 @@
     </div>
 
 <?php include 'includes/footer.php'; ?>
+
+
+
+                

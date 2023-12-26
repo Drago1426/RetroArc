@@ -460,3 +460,13 @@ form button[type="submit"] {
     width: 100%; /* Full width of the container */
     margin-top: 1rem; /* Adds space above the button */
 }
+
+
+
+.btn-group .btn {
+    margin-right: 5px; /* Space between buttons */
+    height: 38px; /* Adjust this value based on your design needs */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

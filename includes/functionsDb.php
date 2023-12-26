@@ -152,4 +152,111 @@ function getUserDetails($conn, $userId) {
     return $stmt->get_result()->fetch_assoc();
 }
 
+
+//Wish List Page
+
+function isProductInWishlist($conn, $userId, $productId) {
+    $sql = "SELECT COUNT(*) FROM wishlist WHERE userId = ? AND productId = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $userId, $productId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_row();
+    return $row[0] > 0;
+}
+
+function getUserWishlist($conn, $userId) {
+    $sql = "SELECT p.* FROM wishlist w 
+            JOIN product p ON w.productId = p.id 
+            WHERE w.userId = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function removeFromWishlist($conn, $userId, $productId) {
+    // SQL to remove the item from the wishlist
+    $sql = "DELETE FROM wishlist WHERE userId = ? AND productId = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ii', $userId, $productId);
+
+    return $stmt->execute();
+}
+
+
+//Cart Page
+
+function getCartItems($conn, $userId) {
+    $sql = "SELECT productId, productImage, SUM(c.quantity) AS totalQuantity, 
+            SUM(c.quantity) * p.price AS subtotal, productName, price
+            FROM cart c
+            JOIN product p ON c.productId = p.id
+            WHERE userId = ?
+            GROUP BY productId";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function calculateCartTotal($cartItems) {
+    $total = 0;
+    foreach ($cartItems as $item) {
+        $total += $item['subtotal'];
+    }
+    return $total;
+}
+
+function removeFromCart($conn, $userId, $productId) {
+    $sql = "DELETE FROM cart WHERE userId = ? AND productId = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $userId, $productId);
+    $stmt->execute();
+
+    // Redirect back to the same page
+    header("Location: cart.php"); // Replace 'cart.php' with the actual name of your cart page
+    exit();
+}
+
+function checkoutCart($conn, $userId) {
+    $conn->begin_transaction();
+
+    // Fetch cart items before calculating total
+    $cartItems = getCartItems($conn, $userId);
+    $orderStatusId = 1;
+    $totalPrice = calculateCartTotal($cartItems); // Pass the cart items here
+
+    // Insert into orders table
+    $orderSql = "INSERT INTO orders (userId, orderDate, totalPrice, statusId) VALUES (?, NOW(), ?, ?)";
+    $orderStmt = $conn->prepare($orderSql);
+    $orderStmt->bind_param("idd", $userId, $totalPrice, $orderStatusId);
+    $orderStmt->execute();
+    $orderId = $conn->insert_id;
+    
+
+    // Move items from cart to order_details
+    foreach ($cartItems as $item) {
+        $detailSql = "INSERT INTO orderproducts (orderId, productId, quantity) VALUES (?, ?, ?)";
+        $detailStmt = $conn->prepare($detailSql);
+        $detailStmt->bind_param("iii", $orderId, $item['productId'], $item['totalQuantity']);
+        $detailStmt->execute();
+
+        if (!$detailStmt->execute()) {
+            error_log("Error inserting order detail: " . $detailStmt->error);
+            $conn->rollback();
+            return false;
+        }
+    }
+
+    // Clear the cart
+    $clearCartSql = "DELETE FROM cart WHERE userId = ?";
+    $clearCartStmt = $conn->prepare($clearCartSql);
+    $clearCartStmt->bind_param("i", $userId);
+    $clearCartStmt->execute();
+
+    $conn->commit();
+}
 ?>

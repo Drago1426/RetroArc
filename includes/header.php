@@ -30,7 +30,7 @@
                 <div class="container">
                     <div class="navbar-nav ms-auto">
                         <li class="nav-item">
-                            <a href="/RetroArc-Website-PHP/pages/wishlist.html">
+                            <a href="../wishList.php">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                                     class="bi bi-bag-heart-fill" viewBox="0 0 16 16">
                                     <path
@@ -39,7 +39,7 @@
                             </a>
                         </li>
                         <li class="nav-item float-right">
-                            <a href="/RetroArc-Website-PHP/pages/cart.html">
+                            <a href="../cart.php">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor"
                                     class="bi bi-basket3-fill" viewBox="0 0 16 16">
                                     <path
