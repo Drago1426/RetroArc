@@ -53,7 +53,7 @@
 
 
     <div class="account-container">
-        <?php if ($_SESSION['displayState'] === 'profile' && $isLoggedIn): 
+        <?php if (isset($_SESSION['displayState']) && $_SESSION['displayState'] === 'profile' && $isLoggedIn): 
             // Fetch user details from the database
             $userId = $_SESSION['userId'];
             $user = getUserDetails($conn, $userId);
@@ -74,7 +74,7 @@
                 <br>
                 <button type="submit" name="logout" class="btn btn-danger">Logout</button>
             </form>
-        <?php elseif ($_SESSION['displayState'] === 'orders' && $isLoggedIn): 
+        <?php elseif (isset($_SESSION['displayState']) && $_SESSION['displayState'] === 'orders' && $isLoggedIn): 
             // Fetch order history
             $orderHistory = getOrderHistory($conn, $userId);
 

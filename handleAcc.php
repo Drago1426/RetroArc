@@ -43,6 +43,7 @@
 
             if ($userId) {
                 $_SESSION['userId'] = $userId; // Store user ID in session
+                $_SESSION['username'] = $username;
                 header('Location: account.php'); // Redirect to account page
                 exit();
             } else {
