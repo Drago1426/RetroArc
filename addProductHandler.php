@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->execute()) {
         echo "<script>
                 alert('Product added successfully.');
-                window.location.href='addProduct.php';
+                window.location.href='productManagement.php';
               </script>";
     } else {
         echo "Error: " . $stmt->error;
