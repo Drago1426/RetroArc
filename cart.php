@@ -4,7 +4,7 @@
     require_once 'includes/functionsDb.php';
 
     if (!isset($_SESSION['userId'])) {
-        header('Location: login.php'); // Redirect to login if not logged in
+        header('Location: account.php'); // Redirect to login if not logged in
         exit();
     }
 

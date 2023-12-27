@@ -19,6 +19,28 @@
         $isLoggedIn = isset($_SESSION['userId']);
     }
 
+    // Define $userId here, immediately after checking $isLoggedIn
+    if ($isLoggedIn) {
+        $userId = $_SESSION['userId'];
+    }
+
+    // Initialize or retrieve the display state
+    if (!isset($_SESSION['displayState'])) {
+        $_SESSION['displayState'] = 'profile'; // default to showing profile
+    }
+
+    // Toggle state on button press
+    if (isset($_POST['toggleView'])) {
+        $_SESSION['displayState'] = $_POST['toggleView'] === 'viewOrders' ? 'orders' : 'profile';
+    }
+
+    // Fetch user details or order history based on the state
+    if ($isLoggedIn && $_SESSION['displayState'] === 'orders') {
+        $orderHistory = getOrderHistory($conn, $userId);
+    } else if ($isLoggedIn) {
+        $user = getUserDetails($conn, $userId);
+    }
+
     include 'includes/header.php'; 
 
     $products = getProducts();
@@ -28,9 +50,9 @@
 
 
     <div class="account-container">
-        <?php if ($isLoggedIn): 
-            $userId = $_SESSION['userId'];
+        <?php if ($_SESSION['displayState'] === 'profile' && $isLoggedIn): 
             // Fetch user details from the database
+            $userId = $_SESSION['userId'];
             $user = getUserDetails($conn, $userId);
             
             echo "<h2>User Profile</h2>" . "<br>";
@@ -40,10 +62,47 @@
             echo "Address: " . htmlspecialchars($user['houseNameNum']) . ", " . 
                 htmlspecialchars($user['street']) . ", " . htmlspecialchars($user['townName']) . 
                 ", " . htmlspecialchars($user['postCode']) . "<br>" . "<br>";
-        ?>
-        <form action="account.php" method="post">
-            <button type="submit" name="logout" class="btn btn-primary">Logout</button>
-        </form>
+            
+            // Button to view order history
+            ?>
+            <form action="account.php" method="post">
+                <input type="hidden" name="toggleView" value="viewOrders">
+                <button type="submit" class="btn btn-secondary">View Order History</button>
+                <br>
+                <button type="submit" name="logout" class="btn btn-danger">Logout</button>
+            </form>
+        <?php elseif ($_SESSION['displayState'] === 'orders' && $isLoggedIn): 
+            // Fetch order history
+            $orderHistory = getOrderHistory($conn, $userId);
+
+            if (count($orderHistory) > 0): ?>
+                <h2>Order History</h2>
+                <table class="table">
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                    </tr>
+                    <?php foreach ($orderHistory as $order): ?>
+                        <tr>
+                            <td><?php echo htmlspecialchars($order['id']); ?></td>
+                            <td><?php echo htmlspecialchars($order['orderDate']); ?></td>
+                            <td><?php echo htmlspecialchars($order['totalPrice']); ?></td>
+                            <td><?php echo htmlspecialchars($order['status']); ?></td>
+                        </tr>
+                    <?php endforeach; ?>
+                </table>
+            <?php else: ?>
+                <p>No order history found.</p>
+            <?php endif; ?>
+
+            <!-- Button to go back to profile -->
+            <form action="account.php" method="post">
+                <input type="hidden" name="toggleView" value="viewProfile">
+                <button type="submit" class="btn btn-primary">Back to Profile</button>
+            </form>
+            <br>
         <?php else: ?>
             <div class="create-account-content-wrap">
                 <div class="account-container">

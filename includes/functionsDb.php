@@ -227,25 +227,33 @@ function checkoutCart($conn, $userId) {
     // Fetch cart items before calculating total
     $cartItems = getCartItems($conn, $userId);
     $orderStatusId = 1;
-    $totalPrice = calculateCartTotal($cartItems); // Pass the cart items here
+    $totalPrice = calculateCartTotal($cartItems);
 
     // Insert into orders table
     $orderSql = "INSERT INTO orders (userId, orderDate, totalPrice, statusId) VALUES (?, NOW(), ?, ?)";
     $orderStmt = $conn->prepare($orderSql);
     $orderStmt->bind_param("idd", $userId, $totalPrice, $orderStatusId);
     $orderStmt->execute();
-    $orderId = $conn->insert_id;
-    
+    if ($orderStmt->affected_rows === 0) {
+        // Order insertion failed
+        $conn->rollback();
+        return false;
+    }
+    $orderId = $conn->insert_id;  // Retrieve the orderId
 
-    // Move items from cart to order_details
+    // Debugging: Output the orderId to check its value
+    error_log("Retrieved orderId: " . $orderId);
+
+    // Check if orderId is valid
+    if ($orderId <= 0) {
+        $conn->rollback();
+        return false;
+    }
+
     foreach ($cartItems as $item) {
-        $detailSql = "INSERT INTO orderproducts (orderId, productId, quantity) VALUES (?, ?, ?)";
-        $detailStmt = $conn->prepare($detailSql);
-        $detailStmt->bind_param("iii", $orderId, $item['productId'], $item['totalQuantity']);
-        $detailStmt->execute();
-
-        if (!$detailStmt->execute()) {
-            error_log("Error inserting order detail: " . $detailStmt->error);
+        // Insert each item into orderproducts
+        if (!insertOrderProduct($conn, $orderId, $item['productId'], $item['totalQuantity'])) {
+            // If insertion fails, rollback and return false
             $conn->rollback();
             return false;
         }
@@ -258,5 +266,40 @@ function checkoutCart($conn, $userId) {
     $clearCartStmt->execute();
 
     $conn->commit();
+    return $orderId; // Return the orderId on successful completion
+}
+
+function insertOrderProduct($conn, $orderId, $productId, $quantity) {
+    $sql = "INSERT INTO orderproducts (orderId, productId, quantity) VALUES (?, ?, ?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iii", $orderId, $productId, $quantity);
+
+    if ($stmt->execute()) {
+        return true;
+    } else {
+        error_log("Error inserting order product: " . $stmt->error);
+        return false;
+    }
+}
+
+function getOrderHistory($conn, $userId) {
+    $sql = "SELECT o.*, status.status 
+            FROM orders o
+            LEFT JOIN status ON o.statusId = status.id
+            WHERE o.userId = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("i", $userId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $orders = $result->fetch_all(MYSQLI_ASSOC);
+    return $orders;
+}
+
+function insertReview($conn, $userId, $productId, $review, $rating) {
+    $sql = "INSERT INTO review (userId, productId, rating, review, reviewDate) VALUES (?, ?, ?, ?, NOW())";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("iisi", $userId, $productId, $review, $rating);
+
+    return $stmt->execute();
 }
 ?>

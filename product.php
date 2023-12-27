@@ -1,6 +1,13 @@
-<?php 
+<?php
+    session_start(); 
     require_once 'includes/dbh.php';
     require_once 'includes/functionsDb.php';
+    
+
+    // Check if user is logged in
+    $isLoggedIn = isset($_SESSION['userId']);
+
+
 
     // Get product ID from URL
     $productId = isset($_GET['id']) ? intval($_GET['id']) : 0;
@@ -53,6 +60,29 @@
             <!-- ... -->
         </div>
         <div class="mt-5">
+            <?php if ($isLoggedIn): ?>
+                <!-- Review Form for Logged In Users -->
+                <h2>Write a Review</h2>
+                <form action="submitReview.php" method="post">
+                    <input type="hidden" name="productId" value="<?php echo htmlspecialchars($productId); ?>">
+                    <div class="form-group">
+                        <label for="review">Your Review:</label>
+                        <textarea class="form-control" id="review" name="review" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="rating">Rating:</label>
+                        <select class="form-control" id="rating" name="rating" required>
+                            <option value="5">5 Stars</option>
+                            <option value="4">4 Stars</option>
+                            <option value="3">3 Stars</option>
+                            <option value="2">2 Stars</option>
+                            <option value="1">1 Star</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                </form>
+            <?php endif; ?>
+
             <!-- Review Form Here -->
             <form action="submitReview.php" method="post">
                 <!-- Form content here -->
@@ -73,7 +103,3 @@
     </div>
 
 <?php include 'includes/footer.php'; ?>
-
-
-
-                
