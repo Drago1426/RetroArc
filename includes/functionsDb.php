@@ -296,10 +296,18 @@ function getOrderHistory($conn, $userId) {
 }
 
 function insertReview($conn, $userId, $productId, $review, $rating) {
-    $sql = "INSERT INTO review (userId, productId, rating, review, reviewDate) VALUES (?, ?, ?, ?, NOW())";
+    $sql = "INSERT INTO review (userId, productId, starRate, review, reviewDate) VALUES (?, ?, ?, ?, NOW())";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("iisi", $userId, $productId, $review, $rating);
+    if (!$stmt) {
+        echo "Error preparing statement: " . $conn->error;
+        return false;
+    }
+    $stmt->bind_param("iiis", $userId, $productId, $rating, $review);
 
-    return $stmt->execute();
+    if (!$stmt->execute()) {
+        echo "Error executing statement: " . $stmt->error;
+        return false;
+    }
+    return true;
 }
 ?>

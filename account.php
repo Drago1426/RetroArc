@@ -1,7 +1,10 @@
 <?php
-    session_start();
-    require_once 'includes/dbh.php';
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
     require_once 'includes/functionsDb.php';
+    require_once 'includes/dbh.php';
+
     require_once 'handleAcc.php';
 
     // Check if the logout button has been pressed
@@ -169,7 +172,7 @@
                 <div class="login-content-wrap">
                     <div class="login-container">
                         <h1 class="main-title">Log In</h1>
-                        <form action="#" method="post">
+                        <form action="handleAcc.php" method="post">
                             <div class="form-field">
                                 <label for="username">Username</label>
                                 <input type="text" id="username" name="username" required>

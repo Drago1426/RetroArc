@@ -19,7 +19,7 @@ if (isset($_POST['submitReview']) && isset($_SESSION['userId'])) {
         echo "<script>alert('Error submitting review.'); window.location.href='product.php?id=$productId';</script>";
     }
 } else {
-    header('Location: login.php'); // Redirect to login if not logged in
+    header('Location: account.php'); // Redirect to login if not logged in
     exit;
 }
 ?>

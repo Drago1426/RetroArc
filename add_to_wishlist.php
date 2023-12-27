@@ -1,5 +1,7 @@
 <?php
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 require_once 'includes/dbh.php';
 require_once 'includes/functionsDb.php';
 

@@ -1,5 +1,7 @@
 <?php
-    session_start(); 
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
     require_once 'includes/dbh.php';
     require_once 'includes/functionsDb.php';
     
@@ -79,15 +81,9 @@
                             <option value="1">1 Star</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Submit Review</button>
+                    <button type="submit" name="submitReview" class="btn btn-primary">Submit Review</button>
                 </form>
             <?php endif; ?>
-
-            <!-- Review Form Here -->
-            <form action="submitReview.php" method="post">
-                <!-- Form content here -->
-            </form>
-            <!-- ... -->
             <h2>Customer Reviews</h2>
             <?php foreach ($reviews as $review): ?>
                 <div class="card my-3">
