@@ -17,6 +17,18 @@ function getProducts($limit = 3) {
     return $products;
 }
 
+function getAllTypes($conn) {
+    $sql = "SELECT id, type FROM productType";
+    $result = $conn->query($sql);
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
+function getAllConsoles($conn) {
+    $sql = "SELECT id, console FROM consoles";
+    $result = $conn->query($sql);
+    return $result->fetch_all(MYSQLI_ASSOC);
+}
+
 function getProductsByTypeAndBrand($conn, $type, $brand) {
     $sql = "SELECT p.id, p.productName, p.productImage, p.price, p.consoleId, p.typeId
             FROM product AS p
