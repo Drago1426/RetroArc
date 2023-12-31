@@ -6,6 +6,11 @@
 
     $products = getProducts();
 
+
+    if (isset($_GET['update']) && $_GET['update'] === 'success') {
+        echo "<script>alert('Product updated successfully!');</script>";
+    }
+
 ?>
 
 
@@ -40,13 +45,22 @@
                 <?php foreach ($products as $product): ?>
                     <div class="col-md-4 mb-4">
                         <div class="card">
-                            <img src="<?php echo htmlspecialchars($product['productImage']); ?>"
-                                class="card-img-top card-img-custom" alt="...">
+                            <img src="<?php echo htmlspecialchars($product['productImage']); ?>" class="card-img-top card-img-custom" alt="<?php echo htmlspecialchars($product['productName']); ?>">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo htmlspecialchars($product['productName']); ?></h5>
-                                <br>
                                 <p class="card-price">$<?php echo htmlspecialchars($product['price']); ?></p>
-                                <a href="product.php?id=<?php echo htmlspecialchars($product['id']); ?>" class="btn btn-primary">Buy</a>
+                                <div class="card-actions">
+                                    <a href="product.php?id=<?php echo htmlspecialchars($product['id']); ?>" class="btn btn-primary">Buy</a>
+
+                                    <!-- Buttons only for admin -->
+                                    <?php if (isset($_SESSION['username']) && $_SESSION['username'] === 'Admin'): ?>
+                                        <a href="editProduct.php?id=<?php echo htmlspecialchars($product['id']); ?>" class="btn btn-warning">Edit</a>
+                                        <form action="deleteProductHandler.php" method="post" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                            <input type="hidden" name="productId" value="<?php echo htmlspecialchars($product['id']); ?>">
+                                            <button type="submit" class="btn btn-danger btn-delete">Delete</button>
+                                        </form>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -62,13 +76,22 @@
                 <?php foreach ($products as $product): ?>
                     <div class="col-md-4 mb-4">
                         <div class="card">
-                            <img src="<?php echo htmlspecialchars($product['productImage']); ?>"
-                                class="card-img-top card-img-custom" alt="...">
+                            <img src="<?php echo htmlspecialchars($product['productImage']); ?>" class="card-img-top card-img-custom" alt="<?php echo htmlspecialchars($product['productName']); ?>">
                             <div class="card-body">
                                 <h5 class="card-title"><?php echo htmlspecialchars($product['productName']); ?></h5>
-                                <br>
                                 <p class="card-price">$<?php echo htmlspecialchars($product['price']); ?></p>
-                                <a href="product.php?id=<?php echo htmlspecialchars($product['id']); ?>" class="btn btn-primary">Buy</a>
+                                <div class="card-actions">
+                                    <a href="product.php?id=<?php echo htmlspecialchars($product['id']); ?>" class="btn btn-primary">Buy</a>
+
+                                    <!-- Buttons only for admin -->
+                                    <?php if (isset($_SESSION['username']) && $_SESSION['username'] === 'Admin'): ?>
+                                        <a href="editProduct.php?id=<?php echo htmlspecialchars($product['id']); ?>" class="btn btn-warning">Edit</a>
+                                        <form action="deleteProductHandler.php" method="post" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                            <input type="hidden" name="productId" value="<?php echo htmlspecialchars($product['id']); ?>">
+                                            <button type="submit" class="btn btn-danger btn-delete">Delete</button>
+                                        </form>
+                                    <?php endif; ?>
+                                </div>
                             </div>
                         </div>
                     </div>

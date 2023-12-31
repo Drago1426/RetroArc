@@ -4,8 +4,8 @@
 
     include 'includes/header.php';
 
-    $types = getAllTypes($conn); // You might need to create this function
-    $consoles = getAllConsoles($conn); // You might need to create this function
+    $types = getAllTypes($conn);
+    $consoles = getAllConsoles($conn);
 ?>
 
     <div class="account-container">

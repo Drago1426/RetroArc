@@ -201,6 +201,7 @@ h2 {
 .card-body {
     display: flex;
     flex-direction: column;
+    padding-bottom: 60px; /* Add padding to prevent overlap with absolute positioned button */
 }
 
 .card-text {
@@ -211,21 +212,19 @@ h2 {
 
 .card-price {
     font-weight: bold;
-    /* Example style, adjust as needed */
-    padding-bottom: 20%;
+    margin-bottom: 1rem; /* Give space for the button */
 }
 
+
 .card .btn {
-    margin-top: auto;
-    /* Pushes the button to the bottom of the flex container */
+    margin-top: auto; /* Pushes the button to the bottom of the flex container */
+}
+
+.card .btn-delete {
     position: absolute;
-    /* Absolute positioning */
-    bottom: 20px;
-    /* Adjust as needed for spacing from the bottom */
-    left: 20px;
-    /* Adjust as needed for spacing from the left */
-    right: 20px;
-    /* Adjust as needed for spacing from the right */
+    bottom: 10px; /* Position at the bottom of the card */
+    left: 10px; /* Give some space from the left */
+    right: 10px; /* Give some space from the right */
 }
 
 
@@ -469,4 +468,15 @@ form button[type="submit"] {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+textarea#description {
+    padding: 8px; /* Adjust the padding as needed */
+    margin: 0; /* Reset any margin */
+    width: 100%; /* Full width */
+    height: 300px; /* Adjust the height as needed */
+    resize: vertical; /* Allows vertical resizing only */
+    border: 1px solid #ccc; /* Adds a border */
+    border-radius: 4px; /* Rounds the corners */
+    box-sizing: border-box; /* Includes padding and border in the element's size */
 }
