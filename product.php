@@ -15,6 +15,25 @@
         echo "<script>alert('You have already reviewed this product.');</script>";
     }
 
+    if (isset($_GET['addedToCart']) && $_GET['addedToCart'] === 'true') {
+        echo "<script>alert('Product added to cart successfully!');</script>";
+    }
+
+    if (isset($_GET['addedMoreToCart']) && $_GET['addedMoreToCart'] === 'true') {
+        echo "<script>alert('Product quantity updated in cart');</script>";
+    }
+
+    if (isset($_GET['inWishlist']) && $_GET['inWishlist'] === 'true') {
+        echo "<script>alert('Product already in wishlist!');</script>";
+    }
+
+    if (isset($_GET['wishlist']) && $_GET['wishlist'] === 'true') {
+        echo "<script>alert('Product added to wishlist!');</script>";
+    }
+
+    
+
+
     require_once 'includes/dbh.php';
     require_once 'includes/functionsDb.php';
     
@@ -44,7 +63,7 @@
             <h4 class="product-price">€<?php echo htmlspecialchars(number_format($product['price'], 2)); ?></h4>
         </div>
         <div class="product-actions">
-            <form action="handleCart.php" method="post">
+            <form action="add_to_cart.php" method="post">
                 <div class="quantity">
                     <label for="quantity">Quantity:</label>
                     <input type="number" id="quantity" name="quantity" min="1" max="<?php echo htmlspecialchars($product['quantity']); ?>" value="1">
@@ -55,17 +74,19 @@
 
                 <div class="row">
                     <div class="col">
-                        <form action="add_to_cart.php" method="post">
-                            <input type="hidden" name="productId" value="<?php echo $product['id']; ?>">
-                            <button type="button" class="btn btn-primary" onclick="addToCart(<?php echo $productId; ?>)">Add to Cart</button>
-                        </form>
-                        <form action="add_to_wishlist.php" method="post">
-                            <input type="hidden" name="productId" value="<?php echo $product['id']; ?>">
-                            <button class="btn btn-secondary" type="button" onclick="addToWishlist(<?php echo $productId; ?>)">Add to Wishlist</button>
-                        </form>
+                        <!-- Add to Cart Button -->
+                        <button type="submit" class="btn btn-primary">Add to Cart</button>
                     </div>
                 </div>
             </form>
+                <div class="row">
+                    <div class="col">
+                    <form action="add_to_wishlist.php" method="post">
+                        <input type="hidden" name="productId" value="<?php echo $product['id']; ?>">
+                        <button class="btn btn-secondary" type="submit">Add to Wishlist</button>
+                    </form>
+                </div>
+            </div>
         </div>
         <div class="product-description">
             <h3>Description:</h3>

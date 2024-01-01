@@ -4,7 +4,7 @@ function getProducts($limit = 3) {
     // Assuming $conn is your database connection variable
     global $conn;
 
-    $sql = "SELECT id, productName, productImage, price FROM Product LIMIT ?";
+    $sql = "SELECT id, productName, productImage, price FROM Product WHERE quantity > 0 LIMIT ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $limit);
     $stmt->execute();
@@ -34,7 +34,7 @@ function getProductsByTypeAndBrand($conn, $type, $brand) {
             FROM product AS p
             JOIN consoles AS c ON p.consoleId = c.id
             JOIN productType AS t ON p.typeId = t.id
-            WHERE c.console = ? AND t.type = ?";
+            WHERE c.console = ? AND t.type = ? AND p.quantity > 0";
             
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ss", $brand, $type);
@@ -300,8 +300,8 @@ function checkoutCart($conn, $userId) {
 
     foreach ($cartItems as $item) {
         // Insert each item into orderproducts
-        if (!insertOrderProduct($conn, $orderId, $item['productId'], $item['totalQuantity'])) {
-            // If insertion fails, rollback and return false
+        if (!insertOrderProduct($conn, $orderId, $item['productId'], $item['cartQuantity']) ||
+        !updateProductQuantity($conn, $item['productId'], $item['cartQuantity'])) {
             $conn->rollback();
             return false;
         }
@@ -328,6 +328,13 @@ function insertOrderProduct($conn, $orderId, $productId, $quantity) {
         error_log("Error inserting order product: " . $stmt->error);
         return false;
     }
+}
+
+function updateProductQuantity($conn, $productId, $quantityPurchased) {
+    $sql = "UPDATE product SET quantity = quantity - ? WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param('ii', $quantityPurchased, $productId);
+    return $stmt->execute();
 }
 
 function getOrderHistory($conn, $userId) {

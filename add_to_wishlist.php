@@ -21,13 +21,15 @@ $stmtCheck->execute();
 $resultCheck = $stmtCheck->get_result();
 
 if ($resultCheck->num_rows > 0) {
-    echo "Product is already in your wishlist.";
+    header("Location: product.php?id=" . $productId . "&inWishlist=true");
+    exit();
 } else {
     $sqlInsert = "INSERT INTO wishlist (userId, productId) VALUES (?, ?)";
     $stmtInsert = $conn->prepare($sqlInsert);
     $stmtInsert->bind_param("ii", $userId, $productId);
     $stmtInsert->execute();
 
-    echo "Product added to wishlist.";
+    header("Location: product.php?id=" . $productId . "&wishlist=true");
+    exit();
 }
 ?>

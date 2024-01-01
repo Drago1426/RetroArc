@@ -31,7 +31,9 @@ if ($resultCheck->num_rows > 0) {
     $stmtUpdate->bind_param("iii", $newQuantity, $userId, $productId);
     $stmtUpdate->execute();
 
-    echo "Product quantity updated in cart.";
+    
+    header("Location: product.php?id=" . $productId . "&addedMoreToCart=true");
+    exit();
 } else {
     // Product is not in cart, add as new entry
     $sqlInsert = "INSERT INTO cart (userId, productId, quantity) VALUES (?, ?, ?)";
@@ -39,7 +41,8 @@ if ($resultCheck->num_rows > 0) {
     $stmtInsert->bind_param("iii", $userId, $productId, $quantity);
     $stmtInsert->execute();
 
-    echo "Product added to cart.";
+    header("Location: product.php?id=" . $productId . "&addedToCart=true");
+    exit();
 }
 
 ?>

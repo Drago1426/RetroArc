@@ -21,7 +21,6 @@
         </script>
     <script src="../assets/js/account.js?v=1"></script>
     <script src="../assets/js/wishlist.js"></script>
-    <script src="../assets/js/updateCart.js"></script>
 
 </body>
 
