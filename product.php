@@ -7,6 +7,10 @@
         echo "<script>alert('Review deleted successfully!');</script>";
     }
 
+    if (isset($_GET['status']) && $_GET['status'] === 'review_updated') {
+        echo "<script>alert('Review updated successfully!');</script>";
+    }
+
     require_once 'includes/dbh.php';
     require_once 'includes/functionsDb.php';
     

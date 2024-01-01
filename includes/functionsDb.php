@@ -82,6 +82,29 @@ function getReviewsByProductId($conn, $productId, $currentUserId) {
     return $result->fetch_all(MYSQLI_ASSOC);
 }
 
+function getReviewById($conn, $reviewId) {
+    $sql = "SELECT * FROM review WHERE id = ?";
+    $stmt = $conn->prepare($sql);
+
+    if (!$stmt) {
+        // Handle error - could not prepare the statement
+        die("Error preparing statement: " . $conn->error);
+    }
+
+    $stmt->bind_param('i', $reviewId);
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+
+    if ($result->num_rows == 0) {
+        // No review found with the given ID
+        return null;
+    }
+
+    return $result->fetch_assoc();
+}
+
+
 function getTowns($conn) {
     $sql = "SELECT * FROM town";
     $result = $conn->query($sql);
@@ -96,9 +119,9 @@ function getTowns($conn) {
 }
 
 function usernameExists($conn, $username) {
-    $sql = "SELECT COUNT(*) FROM user WHERE username = ?";  // Replace 'users' with your actual table name
+    $sql = "SELECT COUNT(*) FROM user WHERE username = ?";
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("s", $username); // 's' indicates the type of the parameter (string)
+    $stmt->bind_param("s", $username);
     $stmt->execute();
     $result = $stmt->get_result();
     $row = $result->fetch_array();
@@ -108,7 +131,7 @@ function usernameExists($conn, $username) {
 }
 
 function emailExists($conn, $email) {
-    $sql = "SELECT COUNT(*) FROM user WHERE email = ?";  // Replace 'users' with your actual table name
+    $sql = "SELECT COUNT(*) FROM user WHERE email = ?";  
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -128,7 +151,6 @@ function createUser($conn, $username, $password, $email, $firstName, $lastName, 
 
     $stmt->bind_param("sssssssss", $username, $password, $email, $firstName, $lastName, $houseNameNum, $street, $townId, $postCode);
 
-    // Execute the prepared statement
     if (!$stmt->execute()) {
         // If execution fails, output the error
         error_log("Error in createUser: " . $stmt->error);

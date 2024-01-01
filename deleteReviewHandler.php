@@ -7,7 +7,7 @@ session_start();
 // Check if the user is logged in and the reviewId POST variable is set
 if (!isset($_SESSION['userId']) || !isset($_POST['reviewId'])) {
     // Redirect to the login page or show an error
-    header('Location: login.php');
+    header('Location: account.php');
     exit();
 }
 
@@ -38,15 +38,5 @@ if ($review && $review['userId'] == $userId) {
 } else {
     // The review does not exist or the user does not have permission to delete it
     die("You do not have permission to delete this review.");
-}
-
-// Get a specific review by its ID
-function getReviewById($conn, $reviewId) {
-    $sql = "SELECT * FROM review WHERE id = ?";
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param('i', $reviewId);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    return $result->fetch_assoc();
 }
 ?>
