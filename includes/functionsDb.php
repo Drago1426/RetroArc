@@ -67,6 +67,9 @@ function getProductById($conn, $productId) {
     return $product;
 }
 
+
+//Reviews
+
 function getReviewsByProductId($conn, $productId, $currentUserId) {
     $sql = "SELECT r.*, u.userName, 
     CASE WHEN r.userId = ? THEN 0 ELSE 1 END as priority
@@ -103,6 +106,17 @@ function getReviewById($conn, $reviewId) {
 
     return $result->fetch_assoc();
 }
+
+function hasUserReviewedProduct($conn, $userId, $productId) {
+    $sql = "SELECT COUNT(*) FROM review WHERE userId = ? AND productId = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->bind_param("ii", $userId, $productId);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $row = $result->fetch_row();
+    return $row[0] > 0; // Returns true if count > 0
+}
+
 
 
 function getTowns($conn) {

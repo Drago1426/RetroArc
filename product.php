@@ -11,6 +11,10 @@
         echo "<script>alert('Review updated successfully!');</script>";
     }
 
+    if (isset($_GET['status']) && $_GET['status'] === 'already_reviewed') {
+        echo "<script>alert('You have already reviewed this product.');</script>";
+    }
+
     require_once 'includes/dbh.php';
     require_once 'includes/functionsDb.php';
     
@@ -18,7 +22,6 @@
     // Check if user is logged in
     $isLoggedIn = isset($_SESSION['userId']);
     $currentUserId = $_SESSION['userId'] ?? null;
-
 
     // Get product ID from URL
     $productId = isset($_GET['id']) ? intval($_GET['id']) : 0;
@@ -34,7 +37,6 @@
 
     <div class="product-container">
         <div class="product-image">
-            <!-- Dynamically load product image -->
             <img src="<?php echo htmlspecialchars($product['productImage']); ?>" alt="<?php echo htmlspecialchars($product['productName']); ?>">
         </div>
         <div class="product-details">
@@ -66,10 +68,8 @@
             </form>
         </div>
         <div class="product-description">
-            <!-- Dynamically load product description -->
             <h3>Description:</h3>
             <p><?php echo htmlspecialchars($product['description']); ?></p>
-            <!-- ... -->
         </div>
         <div class="mt-5">
             <?php if ($isLoggedIn): ?>
