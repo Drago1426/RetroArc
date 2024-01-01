@@ -238,19 +238,18 @@ function removeFromWishlist($conn, $userId, $productId) {
 //Cart Page
 
 function getCartItems($conn, $userId) {
-    $sql = "SELECT productId, productImage, SUM(c.quantity) AS totalQuantity, 
-            SUM(c.quantity) * p.price AS subtotal, productName, price
+    $sql = "SELECT c.productId, p.productImage, c.quantity AS cartQuantity, 
+            SUM(c.quantity) * p.price AS subtotal, p.productName, p.price, p.quantity AS availableQuantity
             FROM cart c
             JOIN product p ON c.productId = p.id
-            WHERE userId = ?
-            GROUP BY productId";
+            WHERE c.userId = ?
+            GROUP BY c.productId";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("i", $userId);
     $stmt->execute();
     $result = $stmt->get_result();
     return $result->fetch_all(MYSQLI_ASSOC);
 }
-
 function calculateCartTotal($cartItems) {
     $total = 0;
     foreach ($cartItems as $item) {
