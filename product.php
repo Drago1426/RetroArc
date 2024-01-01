@@ -2,13 +2,18 @@
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
+
+    if (isset($_GET['status']) && $_GET['status'] === 'review_deleted') {
+        echo "<script>alert('Review deleted successfully!');</script>";
+    }
+
     require_once 'includes/dbh.php';
     require_once 'includes/functionsDb.php';
     
 
     // Check if user is logged in
     $isLoggedIn = isset($_SESSION['userId']);
-
+    $currentUserId = $_SESSION['userId'] ?? null;
 
 
     // Get product ID from URL
@@ -16,7 +21,8 @@
 
     // Fetch product and review details from database
     $product = getProductById($conn, $productId);
-    $reviews = getReviewsByProductId($conn, $productId);
+    $reviews = getReviewsByProductId($conn, $productId, $currentUserId);
+    
 
     include 'includes/header.php'; 
     //echo "Product ID: " . $productId;
@@ -92,6 +98,14 @@
                         <h6 class="card-subtitle mb-2 text-muted"><?php echo htmlspecialchars($review['starRate']); ?> stars</h6>
                         <p class="card-text"><?php echo htmlspecialchars($review['review']); ?></p>
                         <p class="card-text"><small class="text-muted">Reviewed on: <?php echo date("F j, Y, g:i a", strtotime($review['reviewDate'])); ?></small></p>
+                        <?php if ($review['userId'] == $currentUserId): ?>
+                            <a href="editReview.php?reviewId=<?php echo htmlspecialchars($review['id']); ?>" class="btn btn-primary">Edit</a>
+                            </br>
+                            <form action="deleteReviewHandler.php" method="post" onsubmit="return confirm('Are you sure you want to delete this review?');" style="display: inline;">
+                                <input type="hidden" name="reviewId" value="<?php echo htmlspecialchars($review['id']); ?>">
+                                <button type="submit" class="btn btn-danger">Delete</button>
+                            </form>
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php endforeach; ?>

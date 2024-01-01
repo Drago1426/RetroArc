@@ -67,15 +67,16 @@ function getProductById($conn, $productId) {
     return $product;
 }
 
-function getReviewsByProductId($conn, $productId) {
-    $sql = "SELECT r.userId, r.productId, r.review, r.starRate, r.reviewDate, u.userName 
-            FROM review AS r 
-            JOIN user AS u ON r.userId = u.id
-            WHERE r.productId = ? 
-            ORDER BY r.reviewDate DESC";
+function getReviewsByProductId($conn, $productId, $currentUserId) {
+    $sql = "SELECT r.*, u.userName, 
+    CASE WHEN r.userId = ? THEN 0 ELSE 1 END as priority
+    FROM review AS r 
+    JOIN user AS u ON r.userId = u.id
+    WHERE r.productId = ?
+    ORDER BY priority, r.reviewDate DESC";
 
     $stmt = $conn->prepare($sql);
-    $stmt->bind_param("i", $productId);
+    $stmt->bind_param("ii", $currentUserId, $productId);
     $stmt->execute();
     $result = $stmt->get_result();
     return $result->fetch_all(MYSQLI_ASSOC);
