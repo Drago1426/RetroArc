@@ -13,6 +13,8 @@ if (!isset($_SESSION['userId'])) {
 $userId = $_SESSION['userId'];
 $productId = $_POST['productId'] ?? '';
 $quantity = $_POST['quantity'] ?? 1; // Default quantity is 1 if not specified
+$source = $_POST['source'] ?? 'product'; // Default to 'product' if not specified
+
 
 // Check if the product is already in the cart
 $sqlCheck = "SELECT * FROM cart WHERE userId = ? AND productId = ?";
@@ -20,6 +22,12 @@ $stmtCheck = $conn->prepare($sqlCheck);
 $stmtCheck->bind_param("ii", $userId, $productId);
 $stmtCheck->execute();
 $resultCheck = $stmtCheck->get_result();
+
+$redirectUrl = "Location: product.php?id=" . $productId;
+if ($source === 'wishlist') {
+    $redirectUrl = "Location: wishList.php?id=" . $productId;
+}
+header($redirectUrl);
 
 if ($resultCheck->num_rows > 0) {
     // Product is already in cart, update quantity
@@ -32,7 +40,7 @@ if ($resultCheck->num_rows > 0) {
     $stmtUpdate->execute();
 
     
-    header("Location: product.php?id=" . $productId . "&addedMoreToCart=true");
+    header($redirectUrl . "&addedMoreToCart=true");
     exit();
 } else {
     // Product is not in cart, add as new entry
@@ -41,7 +49,7 @@ if ($resultCheck->num_rows > 0) {
     $stmtInsert->bind_param("iii", $userId, $productId, $quantity);
     $stmtInsert->execute();
 
-    header("Location: product.php?id=" . $productId . "&addedToCart=true");
+    header($redirectUrl . "&addedToCart=true");
     exit();
 }
 

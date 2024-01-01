@@ -2,6 +2,15 @@
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
+
+    if (isset($_GET['addedToCart']) && $_GET['addedToCart'] === 'true') {
+        echo "<script>alert('Product added to cart successfully!');</script>";
+    }
+
+    if (isset($_GET['addedMoreToCart']) && $_GET['addedMoreToCart'] === 'true') {
+        echo "<script>alert('Product quantity updated in cart');</script>";
+    }
+    
     require_once 'includes/dbh.php';
     require_once 'includes/functionsDb.php';
 
@@ -39,13 +48,14 @@
                                 <td><?php echo htmlspecialchars($item['productName']); ?></td>
                                 <td><?php echo htmlspecialchars("€" . $item['price']); ?></td>
                                 <td>
-                                <div class="btn-group" role="group" aria-label="Basic example">
-                                <form action="add_to_cart.php" method="post">
-                                    <input type="hidden" name="productId" value="<?php echo $product['id']; ?>">
-                                    <button type="button" class="btn btn-success" onclick="addToCart(<?php echo $item['id']; ?>)">Add to Cart</button>
-                                </form>
-                                </div>
-                                    
+                                    <div class="btn-group" role="group" aria-label="Basic example">
+                                        <form action="add_to_cart.php" method="post">
+                                            <input type="hidden" name="productId" value="<?php echo $item['id']; ?>">
+                                            <input type="hidden" name="quantity" value="1">
+                                            <input type="hidden" name="source" value="wishlist">
+                                            <button type="submit" class="btn btn-success">Add to Cart</button>
+                                        </form>
+                                    </div>
                                     <div class="btn-group" role="group" aria-label="Basic example">
                                         <form action="removeFromWishlist.php" method="post">
                                             <input type="hidden" name="productId" value="<?php echo $item['id']; ?>">
