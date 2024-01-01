@@ -10,7 +10,7 @@
 
     <div class="account-container">
         <h1 class="main-title">Add New product</h1>
-        <form action="addProductHandler.php" method="post">
+        <form action="handlers/addProductHandler.php" method="post">
             <div class="form-field">
                 <label for="productName">Product Name:</label>
                 <input type="text" id="productName" name="productName" required>

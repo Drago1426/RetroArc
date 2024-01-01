@@ -55,7 +55,7 @@
                         <td><?php echo htmlspecialchars($item['cartQuantity']); ?></td>
                         <td>€<?php echo htmlspecialchars($item['subtotal']); ?></td>
                         <td>
-                            <form action="updateCartQuantity.php" method="post">
+                            <form action="handlers/updateCartQuantity.php" method="post">
                                 <input type="hidden" name="productId" value="<?php echo $item['productId']; ?>">
                                  <input type="number" name="quantity" value="<?php echo $item['cartQuantity']; ?>" min="1" max="<?php echo $item['availableQuantity']; ?>">
                                 <button type="submit" name="updateQuantity" class="btn btn-secondary">Update</button>
@@ -76,7 +76,7 @@
             </table>
             <!-- Only display if the user is logged in and the cart is not empty -->
             <?php if (isset($_SESSION['userId']) && !empty($cartItems)): ?>
-                <form action="handleCheckout.php" method="post">
+                <form action="handlers/handleCheckout.php" method="post">
                     <button type="submit" class="btn btn-success">Checkout</button>
                 </form>
             <?php endif; ?>

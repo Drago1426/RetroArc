@@ -63,7 +63,7 @@
             <h4 class="product-price">€<?php echo htmlspecialchars(number_format($product['price'], 2)); ?></h4>
         </div>
         <div class="product-actions">
-            <form action="add_to_cart.php" method="post">
+            <form action="handlers/add_to_cart.php" method="post">
                 <div class="quantity">
                     <label for="quantity">Quantity:</label>
                     <input type="number" id="quantity" name="quantity" min="1" max="<?php echo htmlspecialchars($product['quantity']); ?>" value="1">
@@ -81,7 +81,7 @@
             </form>
                 <div class="row">
                     <div class="col">
-                    <form action="add_to_wishlist.php" method="post">
+                    <form action="handlers/add_to_wishlist.php" method="post">
                         <input type="hidden" name="productId" value="<?php echo $product['id']; ?>">
                         <button class="btn btn-secondary" type="submit">Add to Wishlist</button>
                     </form>
@@ -96,7 +96,7 @@
             <?php if ($isLoggedIn): ?>
                 <!-- Review Form for Logged In Users -->
                 <h2>Write a Review</h2>
-                <form action="submitReview.php" method="post">
+                <form action="handlers/submitReview.php" method="post">
                     <input type="hidden" name="productId" value="<?php echo htmlspecialchars($productId); ?>">
                     <div class="form-group">
                         <label for="review">Your Review:</label>
@@ -126,7 +126,7 @@
                         <?php if ($review['userId'] == $currentUserId): ?>
                             <a href="editReview.php?reviewId=<?php echo htmlspecialchars($review['id']); ?>" class="btn btn-primary">Edit</a>
                             </br>
-                            <form action="deleteReviewHandler.php" method="post" onsubmit="return confirm('Are you sure you want to delete this review?');" style="display: inline;">
+                            <form action="handlers/deleteReviewHandler.php" method="post" onsubmit="return confirm('Are you sure you want to delete this review?');" style="display: inline;">
                                 <input type="hidden" name="reviewId" value="<?php echo htmlspecialchars($review['id']); ?>">
                                 <button type="submit" class="btn btn-danger">Delete</button>
                             </form>

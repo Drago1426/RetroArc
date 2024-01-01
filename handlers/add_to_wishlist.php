@@ -2,11 +2,11 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-require_once 'includes/dbh.php';
-require_once 'includes/functionsDb.php';
+require_once '../includes/dbh.php';
+require_once '../includes/functionsDb.php';
 
 if (!isset($_SESSION['userId'])) {
-    echo "Please log in to add items to your wishlist.";
+    echo "<script>alert('Please Log in to add item to wishlist!');window.location.href='../account.php';</script>";
     exit;
 }
 
@@ -21,7 +21,7 @@ $stmtCheck->execute();
 $resultCheck = $stmtCheck->get_result();
 
 if ($resultCheck->num_rows > 0) {
-    header("Location: product.php?id=" . $productId . "&inWishlist=true");
+    header("Location: ../product.php?id=" . $productId . "&inWishlist=true");
     exit();
 } else {
     $sqlInsert = "INSERT INTO wishlist (userId, productId) VALUES (?, ?)";
@@ -29,7 +29,7 @@ if ($resultCheck->num_rows > 0) {
     $stmtInsert->bind_param("ii", $userId, $productId);
     $stmtInsert->execute();
 
-    header("Location: product.php?id=" . $productId . "&wishlist=true");
+    header("Location: ../product.php?id=" . $productId . "&wishlist=true");
     exit();
 }
 ?>

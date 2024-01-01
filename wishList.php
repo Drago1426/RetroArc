@@ -10,7 +10,7 @@
     if (isset($_GET['addedMoreToCart']) && $_GET['addedMoreToCart'] === 'true') {
         echo "<script>alert('Product quantity updated in cart');</script>";
     }
-    
+
     require_once 'includes/dbh.php';
     require_once 'includes/functionsDb.php';
 
@@ -49,7 +49,7 @@
                                 <td><?php echo htmlspecialchars("€" . $item['price']); ?></td>
                                 <td>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <form action="add_to_cart.php" method="post">
+                                        <form action="handlers/add_to_cart.php" method="post">
                                             <input type="hidden" name="productId" value="<?php echo $item['id']; ?>">
                                             <input type="hidden" name="quantity" value="1">
                                             <input type="hidden" name="source" value="wishlist">
@@ -57,7 +57,7 @@
                                         </form>
                                     </div>
                                     <div class="btn-group" role="group" aria-label="Basic example">
-                                        <form action="removeFromWishlist.php" method="post">
+                                        <form action="handlers/removeFromWishlist.php" method="post">
                                             <input type="hidden" name="productId" value="<?php echo $item['id']; ?>">
                                             <button type="submit" name="removeFromWishlist" class="btn btn-danger">Remove</button>
                                         </form>

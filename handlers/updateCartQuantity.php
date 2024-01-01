@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once 'includes/dbh.php';
+require_once '../includes/dbh.php';
 
 if (isset($_POST['updateQuantity'])) {
     $productId = $_POST['productId'];
@@ -14,7 +14,7 @@ if (isset($_POST['updateQuantity'])) {
     $stmt->execute();
 
     // Redirect back to the cart page
-    header('Location: cart.php');
+    header('Location: ../cart.php');
     exit();
 }
 ?>

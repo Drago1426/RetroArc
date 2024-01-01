@@ -2,8 +2,8 @@
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
-    require_once 'includes/functionsDb.php';
-    require_once 'includes/dbh.php'; // Adjust the path as needed
+    require_once '../includes/functionsDb.php';
+    require_once '../includes/dbh.php'; // Adjust the path as needed
 
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -44,7 +44,7 @@
             if ($userId) {
                 $_SESSION['userId'] = $userId; // Store user ID in session
                 $_SESSION['username'] = $username;
-                header('Location: account.php'); // Redirect to account page
+                header('Location: ../account.php'); // Redirect to account page
                 exit();
             } else {
                 echo "<script>alert('Invalid username or password');</script>";

@@ -5,7 +5,7 @@
     require_once 'includes/functionsDb.php';
     require_once 'includes/dbh.php';
 
-    require_once 'handleAcc.php';
+    require_once 'handlers/handleAcc.php';
 
     // Check if the logout button has been pressed
     if (isset($_POST['logout'])) {
@@ -172,7 +172,7 @@
                 <div class="login-content-wrap">
                     <div class="login-container">
                         <h1 class="main-title">Log In</h1>
-                        <form action="handleAcc.php" method="post">
+                        <form action="handlers/handleAcc.php" method="post">
                             <div class="form-field">
                                 <label for="username">Username</label>
                                 <input type="text" id="username" name="username" required>

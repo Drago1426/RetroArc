@@ -2,11 +2,11 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-require_once 'includes/dbh.php';
-require_once 'includes/functionsDb.php';
+require_once '../includes/dbh.php';
+require_once '../includes/functionsDb.php';
 
 if (!isset($_SESSION['userId'])) {
-    echo "Please log in to add items to your cart.";
+    echo "<script>alert('Please Log in to add item to cart!');window.location.href='../account.php';</script>";
     exit;
 }
 
@@ -23,9 +23,9 @@ $stmtCheck->bind_param("ii", $userId, $productId);
 $stmtCheck->execute();
 $resultCheck = $stmtCheck->get_result();
 
-$redirectUrl = "Location: product.php?id=" . $productId;
+$redirectUrl = "Location: ../product.php?id=" . $productId;
 if ($source === 'wishlist') {
-    $redirectUrl = "Location: wishList.php?id=" . $productId;
+    $redirectUrl = "Location: ../wishList.php?id=" . $productId;
 }
 header($redirectUrl);
 

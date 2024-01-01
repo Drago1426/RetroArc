@@ -21,7 +21,7 @@ include 'includes/header.php';
 <div class="account-container">
     </br>
     <h1>Edit Product</h1>
-    <form action="updateProductHandler.php" method="post">
+    <form action="handlers/updateProductHandler.php" method="post">
         <input type="hidden" name="id" value="<?php echo htmlspecialchars($product['id']); ?>">
 
         <div class="form-field">

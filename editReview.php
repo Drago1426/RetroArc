@@ -28,7 +28,7 @@ include 'includes/header.php';
 <div class="account-container">
     </br>
     <h1>Edit Review</h1>
-    <form action="updateReviewHandler.php" method="post">
+    <form action="handlers/updateReviewHandler.php" method="post">
         <input type="hidden" name="reviewId" value="<?php echo htmlspecialchars($review['id']); ?>">
 
         <div class="form-field">

@@ -55,7 +55,7 @@
                                     <!-- Buttons only for admin -->
                                     <?php if (isset($_SESSION['username']) && $_SESSION['username'] === 'Admin'): ?>
                                         <a href="editProduct.php?id=<?php echo htmlspecialchars($product['id']); ?>" class="btn btn-warning">Edit</a>
-                                        <form action="deleteProductHandler.php" method="post" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                        <form action="handlers/deleteProductHandler.php" method="post" onsubmit="return confirm('Are you sure you want to delete this product?');">
                                             <input type="hidden" name="productId" value="<?php echo htmlspecialchars($product['id']); ?>">
                                             <button type="submit" class="btn btn-danger btn-delete">Delete</button>
                                         </form>
@@ -86,7 +86,7 @@
                                     <!-- Buttons only for admin -->
                                     <?php if (isset($_SESSION['username']) && $_SESSION['username'] === 'Admin'): ?>
                                         <a href="editProduct.php?id=<?php echo htmlspecialchars($product['id']); ?>" class="btn btn-warning">Edit</a>
-                                        <form action="deleteProductHandler.php" method="post" onsubmit="return confirm('Are you sure you want to delete this product?');">
+                                        <form action="handlers/deleteProductHandler.php" method="post" onsubmit="return confirm('Are you sure you want to delete this product?');">
                                             <input type="hidden" name="productId" value="<?php echo htmlspecialchars($product['id']); ?>">
                                             <button type="submit" class="btn btn-danger btn-delete">Delete</button>
                                         </form>

@@ -1,6 +1,6 @@
 <?php
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    require_once 'includes/dbh.php'; // Database connection file
+    require_once '../includes/dbh.php'; // Database connection file
 
     $productName = $_POST['productName'];
     $description = $_POST['description'];
@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->execute()) {
         echo "<script>
                 alert('Product added successfully.');
-                window.location.href='productManagement.php';
+                window.location.href='../productManagement.php';
               </script>";
     } else {
         echo "Error: " . $stmt->error;

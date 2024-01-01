@@ -2,8 +2,8 @@
 if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
-require_once 'includes/dbh.php';
-require_once 'includes/functionsDb.php';
+require_once '../includes/dbh.php';
+require_once '../includes/functionsDb.php';
 
 // Check if user is logged in
 if (!isset($_SESSION['userId'])) {
@@ -21,7 +21,7 @@ if ($orderCreated) {
     // Additional code to handle post-checkout actions (like emptying the cart)
     // ...
 
-    echo "<script>alert('Order placed successfully.'); window.location.href='index.php';</script>";
+    echo "<script>alert('Order placed successfully.'); window.location.href='../index.php';</script>";
 } else {
     echo "An error occurred while placing the order.";
 }

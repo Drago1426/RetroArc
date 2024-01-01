@@ -1,12 +1,12 @@
 <?php
-require_once 'includes/dbh.php';
-require_once 'includes/functionsDb.php';
+require_once '../includes/dbh.php';
+require_once '../includes/functionsDb.php';
 
 session_start();
 
 // Check if the user is an admin
 if (!isset($_SESSION['username']) || $_SESSION['username'] !== 'Admin') {
-    header('Location: account.php');
+    header('Location: ../account.php');
     exit();
 }
 
@@ -53,7 +53,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Execute the statement
         if ($stmt->execute()) {
             // Redirect to a confirmation page or back to the product list
-            header('Location: index.php?update=success');
+            header('Location: ../index.php?update=success');
             exit();
         } else {
             // Handle errors, perhaps log them and show an error message

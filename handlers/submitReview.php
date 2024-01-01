@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once 'includes/dbh.php';
-require_once 'includes/functionsDb.php';
+require_once '../includes/dbh.php';
+require_once '../includes/functionsDb.php';
 
 if (isset($_POST['submitReview']) && isset($_SESSION['userId'])) {
     $productId = $_POST['productId'] ?? 0;
@@ -10,7 +10,7 @@ if (isset($_POST['submitReview']) && isset($_SESSION['userId'])) {
     // Check if the user has already submitted a review for this product
     if (hasUserReviewedProduct($conn, $userId, $productId)) {
         // User has already reviewed this product
-        header('Location: product.php?id=' . $productId . '&status=already_reviewed');
+        header('Location: ../product.php?id=' . $productId . '&status=already_reviewed');
         exit();
     }
 
@@ -22,12 +22,12 @@ if (isset($_POST['submitReview']) && isset($_SESSION['userId'])) {
     // Insert the review into the database
     $success = insertReview($conn, $userId, $productId, $review, $rating);
     if ($success) {
-        echo "<script>alert('Review submitted successfully.'); window.location.href='product.php?id=$productId';</script>";
+        echo "<script>alert('Review submitted successfully.'); window.location.href='../product.php?id=$productId';</script>";
     } else {
-        echo "<script>alert('Error submitting review.'); window.location.href='product.php?id=$productId';</script>";
+        echo "<script>alert('Error submitting review.'); window.location.href='../product.php?id=$productId';</script>";
     }
 } else {
-    header('Location: account.php'); // Redirect to account if not logged in
+    header('Location: ../account.php'); // Redirect to account if not logged in
     exit();
 }
 ?>
