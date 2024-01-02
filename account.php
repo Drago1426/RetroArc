@@ -2,10 +2,33 @@
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
+
+    if (isset($_GET['invalidCred']) && $_GET['invalidCred'] === 'true') {
+        echo "<script>alert('Invalid username or password');</script>";
+    }
+
+    if (isset($_GET['loggedIn']) && $_GET['loggedIn'] === 'true') {
+        echo "<script>alert('You are Logged In');</script>";
+    }
+
+    if (isset($_GET['accCreated']) && $_GET['accCreated'] === 'true') {
+        echo "<script>alert('Account has been created');</script>";
+    }
+
+    if (isset($_GET['accNotCreated']) && $_GET['accNotCreated'] === 'true') {
+        echo "<script>alert('Error creating account. Please try again.');</script>";
+    }
+    
+    if (isset($_GET['usernameTaken']) && $_GET['usernameTaken'] === 'true') {
+        echo "<script>alert('Username is already taken.');</script>";
+    }
+    
+    if (isset($_GET['emailExists']) && $_GET['emailExists'] === 'true') {
+        echo "<script>alert('An account with this email already exists.');</script>";
+    }
+
     require_once 'includes/functionsDb.php';
     require_once 'includes/dbh.php';
-
-    require_once 'handlers/handleAcc.php';
 
     // Check if the logout button has been pressed
     if (isset($_POST['logout'])) {
@@ -110,7 +133,7 @@
             <div class="create-account-content-wrap">
                 <div class="account-container">
                     <h1 class="main-title">Create new account</h1>
-                    <form action="#" method="post">
+                    <form action="handlers/handleAcc.php" method="post">
                         <div class="form-field">
                             <label for="username">Username</label>
                             <input type="text" id="username" name="username" required>

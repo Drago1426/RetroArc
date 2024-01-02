@@ -3,7 +3,7 @@
         session_start();
     }
     require_once '../includes/functionsDb.php';
-    require_once '../includes/dbh.php'; // Adjust the path as needed
+    require_once '../includes/dbh.php';
 
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -21,17 +21,17 @@
 
             // Check if username or email already exists
             if (usernameExists($conn, $username)) {
-                echo "<script>alert('Username is already taken.');</script>";
+                header('Location: ../account.php?usernameTaken=true'); // Redirect to account page
             } elseif (emailExists($conn, $email)) {
-                echo "<script>alert('An account with this email already exists.');</script>";
+                header('Location: ../account.php?emailExists=true'); // Redirect to account page
             } else {
                 // Hash the password and create user
                 $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
                 $userCreated = createUser($conn, $username, $hashedPassword, $email, $firstName, $lastName, $houseNameNum, $street, $townId, $postCode);
                 if ($userCreated) {
-                    echo "<script>alert('Account has been created.');</script>";
+                    header('Location: ../account.php?accCreated=true');
                 } else {
-                    echo "<script>alert('Error creating account. Please try again.');</script>";
+                    header('Location: ../account.php?accNotCreated=true');
                 }
             }
         } elseif (isset($_POST['action']) && $_POST['action'] === 'logIn') {
@@ -44,10 +44,9 @@
             if ($userId) {
                 $_SESSION['userId'] = $userId; // Store user ID in session
                 $_SESSION['username'] = $username;
-                header('Location: ../account.php'); // Redirect to account page
-                exit();
+                header('Location: ../account.php?loggedIn=true'); // Redirect to account page
             } else {
-                echo "<script>alert('Invalid username or password');</script>";
+                header('Location: ../account.php?invalidCred=true');
             }
         }
     }
